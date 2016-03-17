@@ -26,8 +26,8 @@ import {OnInit} from "angular2/core";
 })
 export class BloxorzGame implements OnInit {
     public xExpression = 'i * 50';
-    public yExpression = '0';
-    public zExpression = '0';
+    public yExpression = '(i+j) * 15';
+    public zExpression = 'j * 50';
 
     private renderer: THREE.Renderer;
     private scene: THREE.Scene;
@@ -49,17 +49,19 @@ export class BloxorzGame implements OnInit {
         renderer.setSize(window.innerWidth, window.innerHeight);
         this.elementRef.nativeElement.appendChild(renderer.domElement);
 
-        for (var i = 0; i < 5; i++) {
-            const geometry = new THREE.BoxGeometry(50, 5, 50);
-            const material = new THREE.MeshPhongMaterial();
-            material.shading = THREE.FlatShading;
-            const cube = new THREE.Mesh(geometry, material);
-            this.setCubePosition(cube, i);
-            this.cubes.push(cube);
-            scene.add(cube);
+        for (let i = 0; i < 5; i++) {
+            for (let j = 0; j < 5; j++) {
+                const geometry = new THREE.BoxGeometry(50, 5, 50);
+                const material = new THREE.MeshPhongMaterial();
+                material.shading = THREE.FlatShading;
+                const cube = new THREE.Mesh(geometry, material);
+                this.setCubePosition(cube, i, j);
+                this.cubes.push(cube);
+                scene.add(cube);
 
-            const helper = new THREE.WireframeHelper(cube, 0x000000);
-            scene.add(helper);
+                const helper = new THREE.WireframeHelper(cube, 0x000000);
+                scene.add(helper);
+            }
         }
 
         const ambLight = new THREE.AmbientLight(0x444444);
@@ -78,13 +80,13 @@ export class BloxorzGame implements OnInit {
     }
 
     public updateCubes = function updateCubes() {
-        for(var i=0; i < 5; i++) {
-            this.setCubePosition(this.cubes[i], i);
+        for(let i=0; i < this.cubes.length; i++) {
+            this.setCubePosition(this.cubes[i], Math.floor(i / 5), i % 5);
         }
         this.renderer.render(this.scene, this.camera);
     };
 
-    private setCubePosition(cube: THREE.Mesh, i: number) {
+    private setCubePosition(cube: THREE.Mesh, i: number, j: number) {
         cube.position.set(eval(this.xExpression), eval(this.yExpression), eval(this.zExpression));
     };
 }
