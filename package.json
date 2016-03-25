@@ -1,5 +1,6 @@
 {
   "name": "bloxorz-angular2",
+  "description": "Playing around with Angular 2 and Three.js",
   "version": "1.0.0",
   "scripts": {
     "start": "concurrently \"npm run tsc:w\" \"npm run lite\" ",
