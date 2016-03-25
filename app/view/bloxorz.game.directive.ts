@@ -111,22 +111,22 @@ export class BloxorzGame implements OnInit {
         document.documentElement.onkeydown = (event: KeyboardEvent) => {
             switch (event.keyCode) {
                 case 37:
-                    this.model.left();
+                    this.model = this.model.left();
                     this.updateBlockPosition();
                     this.render();
                     break;
                 case 38:
-                    this.model.up();
+                    this.model = this.model.up();
                     this.updateBlockPosition();
                     this.render();
                     break;
                 case 39:
-                    this.model.right();
+                    this.model = this.model.right();
                     this.updateBlockPosition();
                     this.render();
                     break;
                 case 40:
-                    this.model.down();
+                    this.model = this.model.down();
                     this.updateBlockPosition();
                     this.render();
                     break;

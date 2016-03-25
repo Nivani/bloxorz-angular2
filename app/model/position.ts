@@ -12,18 +12,18 @@ export class Position {
     constructor(private _x: number, private _z: number) {}
     
     public left() {
-        this._z--;
+        return new Position(this._x, this._z - 1);
     };
 
     public right() {
-        this._z++;
+        return new Position(this._x, this._z + 1);
     };
 
     public up() {
-        this._x++;
+        return new Position(this._x + 1, this._z);
     };
 
     public down() {
-        this._x--;
+        return new Position(this._x - 1, this._z);
     };
 }

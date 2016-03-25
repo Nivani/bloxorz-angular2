@@ -3,30 +3,30 @@ import {Position} from "./position";
 describe("Position", () => {
 
     it ("moves left correctly", () => {
-        const underTest = new Position(2, 2);
-        underTest.left();
-        expect(underTest.x).toBe(2);
-        expect(underTest.z).toBe(1);
+        const pos = new Position(2, 2);
+        const newPos = pos.left();
+        expect(newPos.x).toBe(2);
+        expect(newPos.z).toBe(1);
     });
 
     it ("moves right correctly", () => {
-        const underTest = new Position(2, 2);
-        underTest.right();
-        expect(underTest.x).toBe(2);
-        expect(underTest.z).toBe(3);
+        const pos = new Position(2, 2);
+        const newPos = pos.right();
+        expect(newPos.x).toBe(2);
+        expect(newPos.z).toBe(3);
     });
 
     it ("moves up correctly", () => {
-        const underTest = new Position(2, 2);
-        underTest.up();
-        expect(underTest.x).toBe(3);
-        expect(underTest.z).toBe(2);
+        const pos = new Position(2, 2);
+        const newPos = pos.up();
+        expect(newPos.x).toBe(3);
+        expect(newPos.z).toBe(2);
     });
 
     it ("moves down correctly", () => {
-        const underTest = new Position(2, 2);
-        underTest.down();
-        expect(underTest.x).toBe(1);
-        expect(underTest.z).toBe(2);
+        const pos = new Position(2, 2);
+        const newPos = pos.down();
+        expect(newPos.x).toBe(1);
+        expect(newPos.z).toBe(2);
     });
 });
