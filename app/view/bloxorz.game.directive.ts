@@ -3,12 +3,11 @@
 import {Component} from "angular2/core";
 import {ElementRef} from "angular2/core";
 import {OnInit} from "angular2/core";
-import {Bloxorz} from "../model/bloxorz";
+import {Position} from "../model/position";
 
 @Component({
     selector: "nvn-bloxorz-game",
-    template: "",
-    providers: [Bloxorz]
+    template: ""
 })
 export class BloxorzGame implements OnInit {
     private BLOCK_SIZE = 50;
@@ -16,9 +15,11 @@ export class BloxorzGame implements OnInit {
     private renderer: THREE.Renderer;
     private scene: THREE.Scene;
     private camera: THREE.Camera;
+    private model: Position;
     block: THREE.Mesh;
 
-    constructor(private elementRef: ElementRef, private model: Bloxorz) {
+    constructor(private elementRef: ElementRef) {
+        this.model = new Position(2, 2);
     }
 
     ngOnInit() {
