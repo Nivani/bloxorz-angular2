@@ -25,7 +25,8 @@
     });
 
     Promise.all([
-                System.import("app/model/position.spec")
+                System.import("app/model/position.spec"),
+                System.import("app/model/block.spec")
     ])
             .then(window.onload)
             .catch(console.error.bind(console));

@@ -26,4 +26,8 @@ export class Position {
     public down() {
         return new Position(this._x - 1, this._z);
     };
+
+    public equals(otherPos): boolean {
+        return otherPos && this.x === otherPos.x && this.z === otherPos.z;
+    }
 }
