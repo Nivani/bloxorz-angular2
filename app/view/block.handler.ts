@@ -1,3 +1,5 @@
+///<reference path="../../typings/browser/ambient/three/index.d.ts"/>
+
 import {Position} from "../model/position";
 import {Block} from "../model/block";
 import {viewSettings} from "./view.settings";
@@ -36,17 +38,9 @@ export class BlockHandler {
     }
 
     private updateBlockPosition(mesh: THREE.Mesh, position: Position) {
-        mesh.position.x = this.modelXToRealX(position.x);
-        mesh.position.z = this.modelZToRealZ(position.z);
+        mesh.position.x = viewSettings.modelXToRealX(position.x);
+        mesh.position.z = viewSettings.modelZToRealZ(position.z);
     }
-
-    private modelXToRealX(x) {
-        return (-2.5 + x) * viewSettings.TILE_SIZE;
-    };
-
-    private modelZToRealZ(z) {
-        return (-2.5 + z) * viewSettings.TILE_SIZE;
-    };
 
     public left() {
         this.model.left();
