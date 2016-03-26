@@ -8,6 +8,7 @@ import {Block} from "../model/block";
 import {BlockHandler} from "./block.handler"
 import {viewSettings} from "./view.settings";
 import {LevelTilesHandler} from "./level.tiles.handler";
+import {levels} from "../model/levels";
 
 @Component({
     selector: "nvn-bloxorz-game",
@@ -25,8 +26,8 @@ export class BloxorzGame implements OnInit {
 
     ngOnInit() {
         this.initializeRendering();
-        this.levelTilesHandler = new LevelTilesHandler(this.scene);
-        this.blockHandler = new BlockHandler(this.scene, new Position(2, 2));
+        this.levelTilesHandler = new LevelTilesHandler(this.scene, levels[1]);
+        this.blockHandler = new BlockHandler(this.scene, this.levelTilesHandler.startPosition);
         this.render();
         this.initializeInput();
     }

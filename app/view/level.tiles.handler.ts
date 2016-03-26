@@ -1,28 +1,39 @@
 ///<reference path="../../typings/browser/ambient/three/index.d.ts"/>
 
+import {Position} from "../model/Position";
 import {viewSettings} from "./view.settings";
 
 export class LevelTilesHandler {
-    constructor (private scene: THREE.Scene) {
-        for (let x = 0; x < 5; x++) {
-            for (let z = 0; z < 5; z++) {
-                const tileResult = this.createTile(x, z);
-                this.scene.add(tileResult.tile);
-                this.scene.add(tileResult.helper);
+    private _startPosition: Position;
+    public get startPosition() {
+        return this._startPosition;
+    }
+
+    constructor (scene: THREE.Scene, level: String[]) {
+        for (let x = 0; x < level.length; x++) {
+            for (let z = 0; z < level[x].length; z++) {
+                const char = level[x][z];
+                switch (char) {
+                    case 't':
+                        this.addTileToScene(x, z, scene);
+                        break;
+                    case 'S':
+                        this.addTileToScene(x, z, scene);
+                        this._startPosition = new Position(x, z);
+                        break;
+                }
             }
         }
     }
 
-    private createTile(x: number, z: number) {
+    private addTileToScene(x: number, z: number, scene: THREE.Scene) {
         const geometry = new THREE.BoxGeometry(viewSettings.TILE_SIZE, viewSettings.TILE_HEIGHT, viewSettings.TILE_SIZE);
         const material = new THREE.MeshPhongMaterial();
         material.shading = THREE.FlatShading;
         const tile = new THREE.Mesh(geometry, material);
         tile.position.set(viewSettings.modelXToRealX(x), -viewSettings.TILE_HEIGHT, viewSettings.modelZToRealZ(z));
 
-        return {
-            tile: tile,
-            helper: new THREE.WireframeHelper(tile, 0x000000)
-        };
+        scene.add(tile);
+        scene.add(new THREE.WireframeHelper(tile, 0x000000));
     };
 }
