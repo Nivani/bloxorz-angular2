@@ -5,29 +5,26 @@ import {ElementRef} from "angular2/core";
 import {OnInit} from "angular2/core";
 import {Position} from "../model/position";
 import {Block} from "../model/block";
+import {BlockHandler} from "./block.handler"
+import {viewSettings} from "./view.settings";
 
 @Component({
     selector: "nvn-bloxorz-game",
     template: ""
 })
 export class BloxorzGame implements OnInit {
-    private BLOCK_SIZE = 50;
-    private TILE_HEIGHT = 5;
     private renderer: THREE.Renderer;
     private scene: THREE.Scene;
     private camera: THREE.Camera;
-    private model: Block;
-    block1: THREE.Mesh;
-    block2: THREE.Mesh;
+    private blockHandler: BlockHandler;
 
     constructor(private elementRef: ElementRef) {
-        this.model = new Block(new Position(2, 2));
     }
 
     ngOnInit() {
         this.initializeRendering();
         this.initializeTiles();
-        this.initializeBlocks();
+        this.blockHandler = new BlockHandler(this.scene, new Position(2, 2));
         this.render();
         this.initializeInput();
     }
@@ -36,7 +33,6 @@ export class BloxorzGame implements OnInit {
         const scene = new THREE.Scene();
 
         const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 150, 3000);
-        //const camera = new THREE.OrthographicCamera(-0.5 * window.innerWidth, 0.5 * window.innerWidth, -0.5 * window.innerHeight, 0.5 * window.innerHeight, 150, 3000);
         camera.position.set(-1000, 650, -250);
         camera.lookAt(scene.position);
 
@@ -68,11 +64,11 @@ export class BloxorzGame implements OnInit {
     };
 
     private createTile(x: number, z: number) {
-        const geometry = new THREE.BoxGeometry(this.BLOCK_SIZE, this.TILE_HEIGHT, this.BLOCK_SIZE);
+        const geometry = new THREE.BoxGeometry(viewSettings.TILE_SIZE, viewSettings.TILE_HEIGHT, viewSettings.TILE_SIZE);
         const material = new THREE.MeshPhongMaterial();
         material.shading = THREE.FlatShading;
         const tile = new THREE.Mesh(geometry, material);
-        tile.position.set(this.modelXToRealX(x), -this.TILE_HEIGHT, this.modelZToRealZ(z));
+        tile.position.set(this.modelXToRealX(x), -viewSettings.TILE_HEIGHT, this.modelZToRealZ(z));
 
         return {
             tile: tile,
@@ -81,44 +77,12 @@ export class BloxorzGame implements OnInit {
     };
 
     private modelXToRealX(x) {
-        return (-2.5 + x) * this.BLOCK_SIZE;
+        return (-2.5 + x) * viewSettings.TILE_SIZE;
     };
 
     private modelZToRealZ(z) {
-        return (-2.5 + z) * this.BLOCK_SIZE;
+        return (-2.5 + z) * viewSettings.TILE_SIZE;
     };
-
-    private initializeBlocks() {
-        this.block1 = this.initializeBlock();
-        this.block2 = this.initializeBlock();
-        this.updateBlockPositions();
-    }
-
-    private initializeBlock() {
-        const geometry = new THREE.BoxGeometry(this.BLOCK_SIZE, this.BLOCK_SIZE, this.BLOCK_SIZE);
-        const material = new THREE.MeshPhongMaterial({color: 0xBB6600});
-        material.shading = THREE.FlatShading;
-        const block = new THREE.Mesh(geometry, material);
-        block.position.y = this.BLOCK_SIZE / 2.0;
-        this.scene.add(block);
-        this.scene.add(new THREE.WireframeHelper(block, 0x000000));
-        return block;
-    };
-
-    private updateBlockPositions() {
-        this.updateBlockPosition(this.block1, this.model.pos1);
-        this.updateBlockPosition(this.block2, this.model.pos2);
-        if (this.model.pos1.equals(this.model.pos2)) {
-            this.block2.position.y = this.BLOCK_SIZE * 1.5;
-        } else {
-            this.block2.position.y = this.BLOCK_SIZE / 2.0;
-        }
-    }
-
-    private updateBlockPosition(mesh: THREE.Mesh, position: Position) {
-        mesh.position.x = this.modelXToRealX(position.x);
-        mesh.position.z = this.modelZToRealZ(position.z);
-    }
 
     private render() {
         this.renderer.render(this.scene, this.camera);
@@ -128,23 +92,19 @@ export class BloxorzGame implements OnInit {
         document.documentElement.onkeydown = (event: KeyboardEvent) => {
             switch (event.keyCode) {
                 case 37:
-                    this.model.left();
-                    this.updateBlockPositions();
+                    this.blockHandler.left();
                     this.render();
                     break;
                 case 38:
-                    this.model.up();
-                    this.updateBlockPositions();
+                    this.blockHandler.up();
                     this.render();
                     break;
                 case 39:
-                    this.model.right();
-                    this.updateBlockPositions();
+                    this.blockHandler.right();
                     this.render();
                     break;
                 case 40:
-                    this.model.down();
-                    this.updateBlockPositions();
+                    this.blockHandler.down();
                     this.render();
                     break;
             }
