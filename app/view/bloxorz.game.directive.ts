@@ -68,7 +68,7 @@ export class BloxorzGame implements OnInit {
                     this.render();
                     break;
                 case 38:
-                    this.blockHandler.up();
+                    this.blockHandler.down();
                     this.render();
                     break;
                 case 39:
@@ -76,7 +76,7 @@ export class BloxorzGame implements OnInit {
                     this.render();
                     break;
                 case 40:
-                    this.blockHandler.down();
+                    this.blockHandler.up();
                     this.render();
                     break;
             }
