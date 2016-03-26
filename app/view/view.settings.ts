@@ -6,7 +6,7 @@ export const viewSettings = {
 
 
     modelXToRealX: function modelXToRealX(x) {
-        return (-2.5 + x) * -viewSettings.TILE_SIZE;
+        return (-2.5 + x) * viewSettings.TILE_SIZE;
     },
 
     modelZToRealZ: function modelZToRealZ(z) {

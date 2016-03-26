@@ -36,7 +36,7 @@ export class BloxorzGame implements OnInit {
         const scene = new THREE.Scene();
 
         const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 150, 3000);
-        camera.position.set(-1000, 650, -250);
+        camera.position.set(-250, 650, 1000);
         camera.lookAt(scene.position);
 
         const renderer = new THREE.WebGLRenderer({antialias: true});
@@ -68,7 +68,7 @@ export class BloxorzGame implements OnInit {
                     this.render();
                     break;
                 case 38:
-                    this.blockHandler.down();
+                    this.blockHandler.up();
                     this.render();
                     break;
                 case 39:
@@ -76,7 +76,7 @@ export class BloxorzGame implements OnInit {
                     this.render();
                     break;
                 case 40:
-                    this.blockHandler.up();
+                    this.blockHandler.down();
                     this.render();
                     break;
             }

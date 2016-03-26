@@ -10,9 +10,9 @@ export class LevelTilesHandler {
     }
 
     constructor (scene: THREE.Scene, level: String[]) {
-        for (let x = 0; x < level.length; x++) {
-            for (let z = 0; z < level[x].length; z++) {
-                const char = level[x][z];
+        for (let z = 0; z < level.length; z++) {
+            for (let x = 0; x < level[z].length; x++) {
+                const char = level[z][x];
                 switch (char) {
                     case 't':
                         this.addTileToScene(x, z, scene);
