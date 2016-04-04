@@ -9,6 +9,7 @@ import {BlockHandler} from "./block.handler"
 import {viewSettings} from "./view.settings";
 import {LevelTilesHandler} from "./level.tiles.handler";
 import {levels} from "../model/levels";
+import {Level} from "../model/level";
 
 @Component({
     selector: "nvn-bloxorz-game",
@@ -25,35 +26,45 @@ export class BloxorzGame implements OnInit {
     }
 
     ngOnInit() {
-        this.initializeRendering();
-        this.levelTilesHandler = new LevelTilesHandler(this.scene, levels[1]);
+        const level = levels[1];
+        this.initializeRendering(level);
+        this.levelTilesHandler = new LevelTilesHandler(this.scene, level);
         this.blockHandler = new BlockHandler(this.scene, this.levelTilesHandler.startPosition);
         this.render();
         this.initializeInput();
     }
 
-    private initializeRendering() {
-        const scene = new THREE.Scene();
+    private initializeRendering(level: Level) {
+        this.scene = new THREE.Scene();
+        this.initializeCamera(level);
+        this.initializeRenderer();
+        this.initializeLighting();
+    };
 
+    private initializeCamera(level) {
         const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 150, 3000);
-        camera.position.set(-250, 650, 1000);
-        camera.lookAt(scene.position);
+        const levelCenterX = viewSettings.modelXToRealX(level.width / 2.0);
+        const levelCenterZ = viewSettings.modelZToRealZ(level.height / 2.0);
+        camera.position.set(-250 + levelCenterX, 650, 1000 + levelCenterZ);
+        camera.lookAt(new THREE.Vector3(levelCenterX, 0, levelCenterZ));
+        this.camera = camera;
+    };
 
+    private initializeRenderer() {
         const renderer = new THREE.WebGLRenderer({antialias: true});
         renderer.setSize(window.innerWidth, window.innerHeight);
         this.elementRef.nativeElement.appendChild(renderer.domElement);
+        this.renderer = renderer;
+    };
 
+    private initializeLighting() {
         const ambLight = new THREE.AmbientLight(0x444444);
-        scene.add(ambLight);
+        this.scene.add(ambLight);
 
         const light = new THREE.DirectionalLight(0xdddddd, .8);
         light.position.set(0, 200, 0);
-        light.lookAt(scene.position);
-        scene.add(light);
-
-        this.renderer = renderer;
-        this.scene = scene;
-        this.camera = camera;
+        light.lookAt(this.scene.position);
+        this.scene.add(light);
     };
 
     private render() {

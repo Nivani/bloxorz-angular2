@@ -2,6 +2,7 @@
 
 import {Position} from "../model/Position";
 import {viewSettings} from "./view.settings";
+import {Level} from "../model/level";
 
 export class LevelTilesHandler {
     private _startPosition: Position;
@@ -9,10 +10,10 @@ export class LevelTilesHandler {
         return this._startPosition;
     }
 
-    constructor (scene: THREE.Scene, level: String[]) {
-        for (let z = 0; z < level.length; z++) {
-            for (let x = 0; x < level[z].length; x++) {
-                const char = level[z][x];
+    constructor (scene: THREE.Scene, level: Level) {
+        for (let z = 0; z < level.tiles.length; z++) {
+            for (let x = 0; x < level.tiles[z].length; x++) {
+                const char = level.tiles[z][x];
                 switch (char) {
                     case 't':
                         this.addTileToScene(x, z, scene);
