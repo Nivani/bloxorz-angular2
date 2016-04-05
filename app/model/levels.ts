@@ -16,5 +16,17 @@ export const levels = [
         "tStt-------ttOt",
         "tttt-------tttt",
         "------------ttt",
+    ]),
+    new Level([
+        "-----tttttt----",
+        "-----t--ttt----",
+        "-----t--ttttt--",
+        "Sttttt-----tttt",
+        "----ttt----ttOt",
+        "----ttt-----ttt",
+        "------t--tt----",
+        "------ttttt----",
+        "------ttttt----",
+        "-------ttt-----",
     ])
 ];

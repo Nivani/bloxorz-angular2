@@ -26,7 +26,7 @@ export class BloxorzGame implements OnInit {
     }
 
     ngOnInit() {
-        const level = levels[1];
+        const level = levels[2];
         this.initializeRendering(level);
         this.levelTilesHandler = new LevelTilesHandler(this.scene, level);
         this.blockHandler = new BlockHandler(this.scene, this.levelTilesHandler.startPosition);
