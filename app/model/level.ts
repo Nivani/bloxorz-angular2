@@ -33,18 +33,23 @@ export class Level {
                 this._width = _tiles[z].length;
             }
 
-            if (!this._startPosition) {
-                for (let x = 0; x < _tiles[z].length; x++) {
-                    switch (_tiles[z][x]) {
-                        case 'S':
-                            this._startPosition = new Position(x, z);
-                            break;
-                        case 'O':
-                            this._endPosition = new Position(x, z);
-                            break;
-                    }
+            for (let x = 0; x < _tiles[z].length; x++) {
+                switch (_tiles[z][x]) {
+                    case "S":
+                        this._startPosition = new Position(x, z);
+                        break;
+                    case "O":
+                        this._endPosition = new Position(x, z);
+                        break;
                 }
             }
+        }
+        
+        if (!this.startPosition) {
+            throw "Invalid level, could not find startPosition.";
+        }
+        if (!this.endPosition) {
+            throw "Invalid level, could not find endPosition.";
         }
     }
 
