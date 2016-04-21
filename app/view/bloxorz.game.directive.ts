@@ -10,6 +10,7 @@ import {viewSettings} from "./view.settings";
 import {LevelTilesHandler} from "./level.tiles.handler";
 import {levels} from "../model/levels";
 import {Level} from "../model/level";
+import {Bloxorz} from "../model/bloxorz";
 
 @Component({
     selector: "nvn-bloxorz-game",
@@ -21,15 +22,16 @@ export class BloxorzGame implements OnInit {
     private camera: THREE.Camera;
     private levelTilesHandler: LevelTilesHandler;
     private blockHandler: BlockHandler;
+    private model: Bloxorz;
 
     constructor(private elementRef: ElementRef) {
+        this.model = new Bloxorz(levels[2]);
     }
 
     ngOnInit() {
-        const level = levels[2];
-        this.initializeRendering(level);
-        this.levelTilesHandler = new LevelTilesHandler(this.scene, level);
-        this.blockHandler = new BlockHandler(this.scene, level.startPosition);
+        this.initializeRendering(this.model.level);
+        this.levelTilesHandler = new LevelTilesHandler(this.scene, this.model.level);
+        this.blockHandler = new BlockHandler(this.scene, this.model);
         this.render();
         this.initializeInput();
     }
