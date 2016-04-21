@@ -27,7 +27,8 @@
     Promise.all([
                 System.import("app/model/position.spec"),
                 System.import("app/model/block.spec"),
-                System.import("app/model/level.spec")
+                System.import("app/model/level.spec"),
+                System.import("app/model/bloxorz.spec")
     ])
             .then(window.onload)
             .catch(console.error.bind(console));

@@ -16,11 +16,8 @@ export class LevelTilesHandler {
                 const char = level.tiles[z][x];
                 switch (char) {
                     case 't':
-                        this.addTileToScene(x, z, scene);
-                        break;
                     case 'S':
                         this.addTileToScene(x, z, scene);
-                        this._startPosition = new Position(x, z);
                         break;
                 }
             }

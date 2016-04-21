@@ -1,6 +1,11 @@
 import {Position} from "./position"
 
-export class Block {
+export interface ReadOnlyBlock {
+    pos1: Position;
+    pos2: Position;
+}
+
+export class Block implements ReadOnlyBlock {
     private _pos1: Position;
     get pos1(): Position {
         return this._pos1;
@@ -27,7 +32,7 @@ export class Block {
             this._pos1 = this.pos1.left();
             this._pos2 = this.pos2.left();
         }
-    };
+    }
 
     public right() {
         if (this.pos1.equals(this.pos2)) {
@@ -40,7 +45,7 @@ export class Block {
             this._pos1 = this.pos1.right();
             this._pos2 = this.pos2.right();
         }
-    };
+    }
 
     public up() {
         if (this.pos1.equals(this.pos2)) {
@@ -53,7 +58,7 @@ export class Block {
             this._pos1 = this.pos1.up();
             this._pos2 = this.pos2.up();
         }
-    };
+    }
 
     public down() {
         if (this.pos1.equals(this.pos2)) {
@@ -66,5 +71,5 @@ export class Block {
             this._pos1 = this.pos1.down();
             this._pos2 = this.pos2.down();
         }
-    };
+    }
 }

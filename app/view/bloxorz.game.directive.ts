@@ -29,7 +29,7 @@ export class BloxorzGame implements OnInit {
         const level = levels[2];
         this.initializeRendering(level);
         this.levelTilesHandler = new LevelTilesHandler(this.scene, level);
-        this.blockHandler = new BlockHandler(this.scene, this.levelTilesHandler.startPosition);
+        this.blockHandler = new BlockHandler(this.scene, level.startPosition);
         this.render();
         this.initializeInput();
     }
