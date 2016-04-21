@@ -1,6 +1,5 @@
 ///<reference path="../../typings/browser/ambient/three/index.d.ts"/>
 import {Position} from "../model/position";
-import {Block} from "../model/block";
 import {viewSettings} from "./view.settings";
 import {Bloxorz} from "../model/bloxorz";
 
