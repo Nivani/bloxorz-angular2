@@ -3,10 +3,10 @@
 import {Position} from "../model/position";
 import {viewSettings} from "./view.settings";
 import {Bloxorz} from "../model/bloxorz";
+import {VictoryAnimation} from "./victory-animation";
 
 export class BlockHandler {
     private DEFAULT_COLOR = 0xBB6600;
-    private WIN_COLOR = 0x00FF00;
     private LOSS_COLOR = 0xFF0000;
 
     private block1: THREE.Mesh;
@@ -57,8 +57,12 @@ export class BlockHandler {
     private updateBlocks() {
         this.updateBlockPositions();
         this.updateBlockMaterial();
-        this._events.emit("blocksUpdated");
+        this.emitBlocksUpdated();
     }
+
+    private emitBlocksUpdated() {
+        this._events.emit("blocksUpdated");
+    };
 
     private updateBlockPositions() {
         this.updateBlockPosition(this.block1, this.model.block.pos1);
@@ -77,7 +81,7 @@ export class BlockHandler {
 
     private updateBlockMaterial() {
         if (this.model.isWon) {
-            this.setColor(this.WIN_COLOR);
+            new VictoryAnimation(this.block1, this.block2, () => this.emitBlocksUpdated());
         } else if (this.model.isLost) {
             this.setColor(this.LOSS_COLOR);
         }
