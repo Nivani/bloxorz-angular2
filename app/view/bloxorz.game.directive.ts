@@ -10,6 +10,7 @@ import {levels} from "../model/levels";
 import {Level} from "../model/level";
 import {Bloxorz} from "../model/bloxorz";
 import {initializeKeyboardInput} from "./keyboard-input";
+import {SwipeInput} from "./swipe-input";
 
 @Component({
     selector: "nvn-bloxorz-game",
@@ -79,5 +80,6 @@ export class BloxorzGame implements OnInit {
         const up = () => this.blockHandler.up();
         const down = () => this.blockHandler.down();
         initializeKeyboardInput(left, right, up, down);
+        new SwipeInput(left, right, up, down);
     }
 }
