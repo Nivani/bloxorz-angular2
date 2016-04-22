@@ -9,6 +9,7 @@ import {LevelTilesHandler} from "./level.tiles.handler";
 import {levels} from "../model/levels";
 import {Level} from "../model/level";
 import {Bloxorz} from "../model/bloxorz";
+import {initializeKeyboardInput} from "./keyboard-input";
 
 @Component({
     selector: "nvn-bloxorz-game",
@@ -73,21 +74,10 @@ export class BloxorzGame implements OnInit {
     };
 
     private initializeInput() {
-        document.documentElement.onkeydown = (event: KeyboardEvent) => {
-            switch (event.keyCode) {
-                case 37:
-                    this.blockHandler.left();
-                    break;
-                case 38:
-                    this.blockHandler.up();
-                    break;
-                case 39:
-                    this.blockHandler.right();
-                    break;
-                case 40:
-                    this.blockHandler.down();
-                    break;
-            }
-        };
+        const left = () => this.blockHandler.left();
+        const right = () => this.blockHandler.right();
+        const up = () => this.blockHandler.up();
+        const down = () => this.blockHandler.down();
+        initializeKeyboardInput(left, right, up, down);
     }
 }
