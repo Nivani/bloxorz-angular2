@@ -30,6 +30,7 @@ export class BloxorzGame implements OnInit {
         this.initializeRendering(this.model.level);
         this.levelTilesHandler = new LevelTilesHandler(this.scene, this.model.level);
         this.blockHandler = new BlockHandler(this.scene, this.model);
+        this.blockHandler.events.on("blocksUpdated", () => this.render());
         this.render();
         this.initializeInput();
     }
@@ -76,19 +77,15 @@ export class BloxorzGame implements OnInit {
             switch (event.keyCode) {
                 case 37:
                     this.blockHandler.left();
-                    this.render();
                     break;
                 case 38:
                     this.blockHandler.up();
-                    this.render();
                     break;
                 case 39:
                     this.blockHandler.right();
-                    this.render();
                     break;
                 case 40:
                     this.blockHandler.down();
-                    this.render();
                     break;
             }
         };

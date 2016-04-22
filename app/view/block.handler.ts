@@ -1,4 +1,5 @@
 ///<reference path="../../typings/browser/ambient/three/index.d.ts"/>
+///<reference path="../../typings/browser/ambient/eventemitter2/index.d.ts"/>
 import {Position} from "../model/position";
 import {viewSettings} from "./view.settings";
 import {Bloxorz} from "../model/bloxorz";
@@ -10,6 +11,11 @@ export class BlockHandler {
 
     private block1: THREE.Mesh;
     private block2: THREE.Mesh;
+
+    private _events = new EventEmitter2();
+    get events(): EventEmitter2 {
+        return this._events;
+    }
 
     constructor (private scene: THREE.Scene, private model: Bloxorz) {
         this.block1 = this.initializeBlock();
@@ -51,6 +57,7 @@ export class BlockHandler {
     private updateBlocks() {
         this.updateBlockPositions();
         this.updateBlockMaterial();
+        this._events.emit("blocksUpdated");
     }
 
     private updateBlockPositions() {
